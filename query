@@ -1,0 +1,51 @@
+<!-- ::::::::::::::::: QUERY  :::::::: -->
+
+	function queryDB2(tx) 
+	{
+    tx.executeSql('SELECT * FROM Users ORDER BY Id DESC', [], querySuccess2, errorCB2);
+	}
+	
+	function querySuccess2(tx, results) 
+	{ 
+		  var listas =""; 
+			var cadena;
+			var str;
+			var rowsCount = results.rows.length;  
+			for (var i = 0; i < rowsCount; i++)
+			{
+			str=results.rows.item(i).mensaje;
+			cadena = str.substr(0,30);
+			listas += '<li class="liContacto">'+cadena+'</li>';
+			}
+														
+			$('#lista').html(listas);									
+			
+			console.log("Returned rows Users = " + results.rows.length);
+			if (!results.rowsAffected) 
+			{
+				console.log('No rows affected Users');
+				return false;
+			}
+			console.log("Last inserted row ID Users = " + results.insertId);
+	}
+	
+	
+	
+	function errorCB2(err) 
+	{
+       console.log("Error processing SQL Notificaciones: "+err.code);
+    }
+
+	 function successCB2() 
+	{
+        var db = window.openDatabase("Data", "1.0", "Ventas", 100000);
+        db.transaction(queryDB2, errorCB2);
+    }
+	
+	
+    document.addEventListener("deviceready", onDeviceReadyNotificacion, false);
+    function onDeviceReadyNotificacion() 
+	{
+		var db = window.openDatabase("Data", "1.0", "Ventas", 100000);
+        db.transaction(successCB2);
+    }
