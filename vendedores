@@ -1,0 +1,23 @@
+document.addEventListener("deviceready", onDeviceReadys, false);
+											   function onDeviceReadys() 
+											   {
+												 var db = window.openDatabase("Data", "1.0", "DB", 100000);
+												 db.transaction(populateDB, errorCB, successCB);
+											   }
+							
+												function populateDB(tx) 
+												{
+													tx.executeSql('CREATE TABLE IF NOT EXISTS Vendedores (iDe INTEGER PRIMARY KEY AUTOINCREMENT, ideVendedor, Nombre, Email, Telefono, Estatus )');
+													tx.executeSql('INSERT INTO Vendedores (ideVendedor, Nombre, Email, Telefono, Estatus) VALUES ("'+ide+'", "'+nombre+'", "'+email+'", "'+telefono+'", "1")');
+												}
+											
+											   
+												function errorCB(err) 
+												{
+													console.log('Error al guardar Vendedores'+err);
+												}
+											
+												function successCB() 
+												{
+												   console.log('Vendedores almacenado exitosamente');
+												}
