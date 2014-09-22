@@ -1,0 +1,8 @@
+mainView.hideNavbar();
+
+
+$('.item-link').on('click', function () 
+{
+     mainView.showNavbar();
+	
+});
